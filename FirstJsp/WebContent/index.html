@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Tutorial - Simple OverlayBox using JQuery - By Kalyan</title>
+<script language="javascript" src="jquery-1.2.6.min.js"></script>
+<!--script language="javascript" src="jquery-ui-personalized-1.6rc2.packed.js"></script-->
+<style type="text/css">
+body { font:76% verdana; }
+.bgCover { background:#000; position:absolute; left:0; top:0; display:none; overflow:hidden }
+.overlayBox {
+	border:5px solid #09F;
+	position:absolute;
+	display:none;
+	width:500px;
+	height:300px;
+	background:#fff;
+}
+.overlayContent {
+	padding:10px;
+}
+.closeLink {
+	float:right;
+	color:red;
+}
+a:hover { text-decoration:none; }
+
+h2 {
+	padding:5px;
+	margin:0;
+}
+</style>
+</head>
+<body>
+
+<div class="bgCover">&nbsp;</div>
+<div class="overlayBox">
+	<div class="overlayContent">
+        <a href="#" class="closeLink">Close</a>
+        <h2>Hello World</h2>
+        <p>Feel free to put in what ever content you wish to. Images can also be shown</p>
+	</div>
+</div>
+<a href="javascript:void()" class="launchLink">Launch Window1</a>
+
+
+<h1>Simple Overlay Box - by <a href="/">Kalyan</a></h1>
+<p>Phasellus eleifend lorem et sem. Proin cursus. Morbi a elit. In auctor. Sed gravida massa et est. Vestibulum placerat. Praesent orci mi, auctor vestibulum, tincidunt a, rutrum eget, lorem. Duis mattis arcu et arcu. Phasellus porttitor orci sit amet diam placerat adipiscing. Morbi aliquam consectetuer lectus. Ut est risus, commodo a, feugiat a, dignissim et, tortor. Cras lectus tellus, cursus quis, tempus vel, rutrum ut, ligula. In fringilla venenatis est.</p>
+<p>Vestibulum orci. Ut consequat mi nec tellus. Duis quam. Vestibulum egestas dui non urna. Mauris nec quam. Nulla urna tellus, vulputate eu, congue eget, commodo mollis, libero. Nam condimentum, neque facilisis dignissim dapibus, magna ante pellentesque risus, dapibus mollis urna velit vel nisl. Duis tincidunt mi ac purus. Duis odio felis, mollis eu, venenatis nec, ullamcorper vitae, enim. Etiam turpis est, ultrices a, tristique cursus, suscipit suscipit, mauris. Cras sagittis, dolor pellentesque bibendum venenatis, lectus pede suscipit odio, ut eleifend tellus pede vitae ipsum. Proin luctus auctor nibh. Morbi ornare risus et diam. Quisque porta sem non massa. Curabitur at lectus. Phasellus nunc sapien, tristique sed, dignissim quis, suscipit at, enim. Sed imperdiet. Quisque id sapien. Phasellus convallis. Morbi elit metus, sagittis quis, ultrices ut, accumsan non, felis.</p>
+<p>Nam ornare neque et augue. Quisque a nunc a risus dignissim aliquet. Pellentesque fermentum malesuada massa. Ut congue mi ac neque. Nulla metus diam, rutrum vel, suscipit quis, pharetra nec, erat. Integer tincidunt suscipit mauris. Vivamus faucibus auctor ante. In sem. Nunc eget velit. Maecenas mauris mi, sodales nec, vulputate eget, suscipit non, enim. Praesent id purus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas nulla.</p>
+<p>Maecenas eget dolor. Donec in velit. In sagittis varius sem. Donec iaculis orci eu ligula pretium pellentesque. Fusce scelerisque convallis sapien. Morbi sollicitudin, felis sit amet bibendum facilisis, turpis leo laoreet lectus, eu sollicitudin purus diam nec augue. Morbi congue dui id lorem. Morbi nibh odio, consequat sit amet, tempor vel, commodo in, mi. Praesent aliquet porttitor ante. Nam augue massa, dapibus non, egestas porttitor, aliquam a, lectus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+<script language="javascript">
+
+function showOverlayBox() {
+	//if box is not set to open then don't do anything
+	if( isOpen == false ) return;
+	// set the properties of the overlay box, the left and top positions
+	$('.overlayBox').css({
+		display:'block',
+		left:( $(window).width() - $('.overlayBox').width() )/2,
+		top:( $(window).height() - $('.overlayBox').height() )/2 -20,
+		position:'absolute'
+	});
+	// set the window background for the overlay. i.e the body becomes darker
+	$('.bgCover').css({
+		display:'block',
+		width: $(window).width(),
+		height:$(window).height(),
+	});
+}
+function doOverlayOpen() {
+	//set status to open
+	isOpen = true;
+	showOverlayBox();
+	$('.bgCover').css({opacity:0}).animate( {opacity:0.5, backgroundColor:'#000'} );
+	// dont follow the link : so return false.
+	return false;
+}
+function doOverlayClose() {
+	//set status to closed
+	isOpen = false;
+	$('.overlayBox').css( 'display', 'none' );
+	// now animate the background to fade out to opacity 0
+	// and then hide it after the animation is complete.
+	$('.bgCover').animate( {opacity:0}, null, null, function() { $(this).hide(); } );
+}
+// if window is resized then reposition the overlay box
+$(window).bind('resize',showOverlayBox);
+// activate when the link with class launchLink is clicked
+$('a.launchLink').click( doOverlayOpen );
+// close it when closeLink is clicked
+$('a.closeLink').click( doOverlayClose );
+
+</script>
+</body>
+</html>
